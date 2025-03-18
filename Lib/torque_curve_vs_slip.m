@@ -53,6 +53,10 @@ for k = 1:numel(slips)
     ag_flux_densities(k) = abs(Bdata.Bn_spectrum(1+dim.p)); 
 end
 
+%interpolating rated slip
+slip_int = interp1(Ts, slips, dim.Ttarget, 'linear', 'extrap');
+n_int = interp1(Ts, 1:numel(slips), dim.Ttarget, 'nearest', 'extrap');
+
 %plotting flux density
 figure(4); clf; hold on; box on; axis equal;
 title('Flux density at maximum torque')
@@ -65,10 +69,10 @@ title('Torque vs slip')
 plot(slips*1e2, Ts, 'bo-');
 xlabel('Slip (%)')
 ylabel('Torque (Nm)')
+yline(dim.Ttarget)
+xline(slip_int*1e2, 'm')
+legend('Torque curve', 'Torque target', 'Rated slip (estimate)')
 
-%interpolating rated slip
-slip_int = interp1(Ts, slips, dim.Ttarget, 'linear', 'extrap');
-n_int = interp1(Ts, 1:numel(slips), dim.Ttarget, 'nearest', 'extrap');
 
 %power curve
 figure(6); clf; hold on; box on; grid on;
@@ -78,10 +82,10 @@ Ps = 2*pi*fms.*Ts;
 plot(slips*1e2, Ps*1e-3);
 
 figure(7); clf; hold on; box on; axis equal;
-title('Flux density closest to target torque')
 motor.plot_flux( harmonic_solutions(n_int) );
 xlabel('Slip (%)');
 ylabel('Shaft power (kW)');
+title('Flux density closest to target torque')
 
 figure(8); clf; hold on; box on; grid on;
 title('Airgap flux density closest to target torque')

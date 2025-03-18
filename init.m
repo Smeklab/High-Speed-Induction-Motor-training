@@ -10,3 +10,8 @@ addpath(genpath('E:\Work\Matlab\EMDtool\Versions\3.0.2\EMDtool'));
 
 %Add all subfolders to the search path.
 addpath(genpath(cd()))
+
+
+%only needs to be done once:
+% emdtool.load_license('license_file.lic');
+% emdtool.set_gmsh_path('E:\Software\Work\gmsh-4.11.1');

@@ -77,7 +77,7 @@ xlabel('Time (s)');
 ylabel('Current (A)');
 title('Terminal current');
 
-%calculating copper losses
+%calculating results summary
 summary = motor.results_summary(stepping_solution, 'verbose', true);
 
 Coat = rotor.circuits.get('Rotor_coat');
