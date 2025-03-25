@@ -6,6 +6,9 @@
 %creating a struct for dimensions
 dim = struct();
 
+dim.UDC = 600; %DC-link voltage
+dim.fs = 8e3; %switching frequency
+
 %Some design point information - these are not used by the built-in
 %templates, but keeping them here is handy.
 dim.Ttarget = 10; %torque target

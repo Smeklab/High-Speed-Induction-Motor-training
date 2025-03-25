@@ -26,8 +26,11 @@ if supply_mode == "current"
     Is = spec.xy(Ipeak*[0; 1], 2*pi*pars.f*pars.ts());
     phase_circuit.set_source('terminal current source', Is);
 elseif supply_mode == "voltage"
+    modulator = SpaceVectorModulator(dim.UDC, dim.fs);
+    modulator.levels = 3;
+
     Uphase_peak = dim.ULL*sqrt(2/3);
-    Usource = VoltageSource( motor );
+    Usource = VoltageSource( motor,modulator);
     Usource.set_Udq( [Uphase_peak; 0] );
     phase_circuit.set_source('terminal voltage', @Usource.U);
 else

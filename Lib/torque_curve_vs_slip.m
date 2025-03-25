@@ -7,7 +7,7 @@ f = dim.rpm/60;
 %standard naming or anything.
 %
 % NOTE: The supply mode will also influence the torque-slip behaviour.
-supply_mode = "current";
+supply_mode = "voltage";
 
 %slip range to analyse - good values depend on the design etc
 slips = linspace(0.1, 1, 10)*1e-2;

@@ -26,7 +26,7 @@ model.add_node(n_inlet);
 
 v_est = 12; %axial velocity
 %volumetric flow; assuming inlet at core center and flow towards DE and NDE
-Q_ax = 2*pi*dim.Rout*dim.delta * v_est * 2 ; 
+Q_ax = 2*pi*dim.Rout*dim.delta * v_est * 2 * 2; 
 qm_ax = Q_ax*ThermalConstants.air_density; %mass flow
 conn_flow = FlowHeatSinkConnection(model.airgap_model.node, n_inlet);
 conn_flow.coolant_mass_flow = qm_ax;
