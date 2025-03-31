@@ -16,8 +16,8 @@ spec = stator.winding_spec;
 problem = MagneticsProblem.new(motor);
 
 %setting parameters
-pars = SimulationParameters('f', f, 'N_periods', 0.2, ...
-    'N_stepsPerPeriod', 100, 'silent', true, 'slip', slip);
+pars = SimulationParameters('f', f, 'N_periods', 1, ...
+    'N_stepsPerPeriod', 400, 'silent', true, 'slip', slip);
 pars.alpha2 = 1.2;
 
 if supply_mode == "current"
@@ -79,6 +79,21 @@ plot(stepping_solution.ts, I);
 xlabel('Time (s)');
 ylabel('Current (A)');
 title('Terminal current');
+
+%Plotting strand-level currents
+Istrand = phase_circuit.coil_current(stepping_solution);
+figure(9); clf; hold on; box on; grid on;
+title('Strand currents');
+h = plot(stepping_solution.ts, Istrand);
+xlabel('Time (s)');
+ylabel('Current (A)');
+n = spec.wires_in_hand;
+[h(1:n).Color] = deal('b');
+[h(n+(1:n)).Color] = deal('r');
+[h(2*n+(1:n)).Color] = deal('k');
+
+
+
 
 %calculating results summary
 summary = motor.results_summary(stepping_solution, 'verbose', true);
