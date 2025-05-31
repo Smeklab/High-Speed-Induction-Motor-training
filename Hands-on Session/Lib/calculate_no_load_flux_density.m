@@ -24,3 +24,10 @@ figure(6); clf; hold on; box on; grid on;
 motor.plot_airgap_flux_density(static_solution);
 %Bag_plot;
 
+%plotting lost remanence, see
+% help DemagMaterial1.visualize_lost_remanence
+figure(7); clf; hold on; box on; axis equal;
+title('Elementwise lost remanence')
+mmag_in_model.visualize_lost_remanence();
+colorbar;
+

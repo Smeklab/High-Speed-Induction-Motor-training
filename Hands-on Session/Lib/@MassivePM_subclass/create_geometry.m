@@ -1,5 +1,4 @@
 function create_geometry(this)
-
 %Mostly copy-pasted from the MassivePM template 
 % see open MassivePM.create_geometry
 %
@@ -149,7 +148,7 @@ if has_shaft
     % span.
     X_hole_cw = Point([dimensions.r_hole; 0], lcar_shaft); %clockwise boundary point
     X_hole_mid = X_hole_cw.rotate(apole/2); %center point
-    X_hole_ccw = X_hole_cw.rotate(apole); %counter-clockwise boundary
+    X_hole_ccw = X_hole_cw.mirror(apole); %counter-clockwise boundary
 
     %plotting our new points if needed
     if this.plot_debug
@@ -171,6 +170,10 @@ if has_shaft
         geo.line, X_hole_ccw, O);
     Hole.add_surface(shole);
 
+    if this.plot_debug
+        shole.plot('r--');
+    end
+
     %setting periodic boundaries
     geo.set_periodic(O, X_hole_cw, O, X_hole_ccw);
 
@@ -185,6 +188,11 @@ if has_shaft
     Shaft.add_surface(sshaft);
     geo.set_periodic(X_hole_cw, Xshaft_cw, X_hole_ccw, Xshaft_ccw);
     geo.set_periodic(Xshaft_cw, Xmag_mid_cw, Xshaft_ccw, Xmag_mid_ccw);
+
+    if this.plot_debug
+        sshaft.plot('b:');
+    end
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

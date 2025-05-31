@@ -39,8 +39,15 @@ rotor.plot_geometry();
 assert(rotor.check_feasibility())
 
 
-
+%return
 motor = RFmodel(dim, stator, rotor);
 
 figure(2); clf; hold on; box on; axis equal;
 motor.visualize('linestyle','-');
+
+figure(3); clf; hold on;
+motor.mesh.triplot([]);
+%shaft = rotor.domains.get('Shaft_1');
+shaft = rotor.domains(end-1);
+motor.mesh.triplot(shaft.elements, 'r');
+

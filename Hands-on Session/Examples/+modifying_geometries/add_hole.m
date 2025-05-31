@@ -39,6 +39,10 @@ for k = 1:numel(angles)
 end
 assert(rotor.check_feasibility())
 
+rotor.plot_geometry();
+
+%return
+
 %for faster analysis
 rotor.scale_mesh_density(2, 'lcar_max', 15e-3);
 
@@ -48,3 +52,6 @@ motor = RFmodel(dim, stator, rotor);
 
 figure(2); clf; hold on; box on; axis equal;
 motor.visualize('linestyle','-');
+
+figure(3); clf; hold on;
+motor.mesh.triplot([]);

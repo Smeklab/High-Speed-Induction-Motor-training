@@ -68,42 +68,15 @@ dim.rotor_sleeve_material = 20;
 
 %begin from existing material to avoid needing to set all properties
 m_linear = PMlibrary.create('N42EH');
-mmag = DemagMaterial1().from_material(m_linear);
+dim.magnet_material = m_linear;
 
-%loading 2nd-quadrant BH curve from file
-D = load('Data/BH_data.mat');
-mmag.set_symmetric_BH_table_from_BH_data(D.BH_table);
-
-%visualizing B(H) and J(H) curves
-figure(10); clf; hold on; box on; grid on;
-mmag.visualize_demag_curve();
-
-dim.magnet_material = mmag;
-
-%you can also try the following
-if true
-    mmag.use_simple_model = true;
-    mmag.H0 = 10e3; %change the squareness
-    mmag.initialize_simple_model(dim.temperature_rotor);
-
-    figure(10); clf; hold on; box on; grid on;
-    mmag.visualize_demag_curve();
-
-    xline(-mmag.intrinsic_coercivity_at_temperature(dim.temperature_rotor), 'r');
-    yline(mmag.remanence_flux_density_at_temperature(dim.temperature_rotor, true), 'c');
-
-    legend('B(H)', 'J(H)', 'HcJ', 'Br')
-
-    figure(11); clf; hold on;
-    mmag.visualize_BH(0:0.25:2.5);
-end
-
-%return
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 stator = Stator(dim);
 rotor = HSSPM(dim);
+
+
 
 figure(1); clf; hold on; box on; axis equal;
 stator.plot_geometry();
@@ -111,6 +84,11 @@ rotor.plot_geometry();
 
 
 motor = RFmodel(dim, stator, rotor);
+
+%manually setting stacking factor
+% NOTE: needs the latest EMDtool release (2025-04-15 or newer)
+mcore_in_model = stator.materials.get(dim.stator_core_material.name);
+mcore_in_model.stacking_factors = ones(1, numel(mcore_in_model.elements)) * 0.95;
 
 figure(2); clf; hold on; box on; axis equal;
 motor.visualize('linestyle', '-');

@@ -51,7 +51,8 @@ elseif EXAMPLE_TYPE == 2
 
     %adjusting characteristic length
     for p = interface_points
-        p.lcar = p.lcar * 0.1;
+        %p.lcar = p.lcar * 0.1;
+        p.lcar = 0.5e-3;
     end
 end
 

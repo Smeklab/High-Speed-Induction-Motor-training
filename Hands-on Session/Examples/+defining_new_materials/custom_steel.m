@@ -12,6 +12,7 @@ mcore = SteelLibrary.create('Custom_material_1', ... %material nime in Excel
     'file_to_use', 'Data/Custom_steels.xlsx', ... %loading from custom file
     'include_excess', true); %not included by default
 mcore.material_properties.rho = 7.6e3; %custom density
+
 dim.stator_core_material = mcore;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,6 +26,12 @@ H_an = H_langevin_single(B_an, 1.2, 50);
 mrotor.B = B_an;
 mrotor.H = H_an;
 mrotor.initialize_material_data();
+
+% seeing interpolation/extrapolation data:
+mrotor.data
+
+% See help Material.iron_loss_density_time_domain_Steinmetz to see Steinmetz
+% (hysteresis) exponents
 
 %always a good idea to rename
 mrotor.name = 'Custom low-saturation steel';
